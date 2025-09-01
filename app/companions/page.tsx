@@ -3,10 +3,15 @@ import SearchInput from '@/components/SearchInput';
 import SubjectFilter from '@/components/SubjectFilter';
 import { getAllCompanions } from '@/lib/actions/companion.actions';
 import { getSubjectColor } from '@/lib/utils';
+import { auth } from '@clerk/nextjs/server';
+import { redirect } from "next/navigation"
 import React from 'react'
 
 const CompanionsLibrary = async ({searchParams}:SearchParams) => {
 
+
+    const {userId} = await auth()
+    if(!userId) redirect("/sign-in")
   const filters = await searchParams;
 
   const subject = filters.subject?filters.subject:''

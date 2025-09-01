@@ -3,6 +3,8 @@
 import { auth } from "@clerk/nextjs/server"
 import { createSupabaseClient } from "../supabaase"
 
+
+// Fn to create a companion
 export const createCompanion=async(formData:CreateCompanion)=>{
     const {userId:author}=await auth()
     const supabase = createSupabaseClient()
@@ -17,6 +19,9 @@ export const createCompanion=async(formData:CreateCompanion)=>{
     return data[0]    
 }
 
+
+
+// Fn to get the data of all comapnions
 export const getAllCompanions = async({limit=10,page=1,subject,topic}:GetAllCompanions)=>{
     const supabase = createSupabaseClient()
 
@@ -38,5 +43,20 @@ export const getAllCompanions = async({limit=10,page=1,subject,topic}:GetAllComp
      if(error) throw new Error(error?.message)
 
     return companions 
+
+}
+
+
+
+// Fn to get data of a single companion
+export const getCompanion = async (id:string) =>{
+    const supabase = createSupabaseClient()
+
+    const {data,error} = await supabase.from('companion').select().eq('id',id)
+
+    if(error) return console.log(error)
+
+    return data[0]    
+
 
 }

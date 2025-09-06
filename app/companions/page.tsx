@@ -1,7 +1,7 @@
 import CompanionCard from '@/components/CompanionCard';
 import SearchInput from '@/components/SearchInput';
 import SubjectFilter from '@/components/SubjectFilter';
-import { getAllCompanions } from '@/lib/actions/companion.actions';
+import { getAllCompanions, getRecentSessions } from '@/lib/actions/companion.actions';
 import { getSubjectColor } from '@/lib/utils';
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from "next/navigation"
@@ -11,15 +11,14 @@ const CompanionsLibrary = async ({searchParams}:SearchParams) => {
 
 
     const {userId} = await auth()
+  
     if(!userId) redirect("/sign-in")
   const filters = await searchParams;
 
   const subject = filters.subject?filters.subject:''
   const topic = filters.topic?filters.topic:''
 
-  const companions = await getAllCompanions({subject,topic})
-
-  console.log("rendered")
+  const companions = await getAllCompanions({subject,topic,userId})
 
 
   return (

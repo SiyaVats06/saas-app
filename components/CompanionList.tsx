@@ -10,18 +10,17 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { getSubjectColor } from "../lib/utils";
+import { getRecentSessions } from "@/lib/actions/companion.actions";
 
 interface CompanionListProps {
-  title: string;
+  title?: string;
   companions?: Companion[];
-  classNames: string;
+  classNames?: string;
 }
 
-const CompanionList = ({
-  title,
-  companions,
-  classNames,
-}: CompanionListProps) => {
+const CompanionList = async ({title, companions, classNames,}: CompanionListProps) => {
+
+
   return (
     <article className="border rounded-2xl p-8">
       <h2 className="text-3xl font-bold">{title}</h2>
@@ -34,29 +33,37 @@ const CompanionList = ({
           </TableRow>
         </TableHeader>
 
-        {companions?.map((companion) => (
-          <TableBody key={companion.id}>
-            <TableRow >
+        {companions?.map(({id, subject, name, topic, duration}:Companion) => (
+          <TableBody key={id}>
+            <TableRow>
               <TableCell>
-                <Link href={`/companions/${companion.id}`}>
-
-                <div className="flex gap-2 justify-start items-center">
-                  <div className="flex justify-center items-center size-[72px] rounded-b-lg" style={{backgroundColor:getSubjectColor(companion.subject)}}>
-                    <Image src={`/icons/${companion.subject}.svg`} alt="subject-icon" width={35} height={35}/>
+                <Link href={`/companions/${id}`}>
+                  <div className="flex gap-2 justify-start items-center">
+                    <div
+                      className="flex justify-center items-center size-[72px] rounded-b-lg"
+                      style={{
+                        backgroundColor: getSubjectColor(subject),
+                      }}
+                    >
+                      <Image
+                        src={`/icons/${subject}.svg`}
+                        alt="subject-icon"
+                        width={35}
+                        height={35}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2 ">
+                      <h2 className="text-2xl font-bold">{name}</h2>
+                      <p className="text-lg">{topic}</p>
+                    </div>
                   </div>
-                  <div className="flex flex-col gap-2 ">
-                      <h2 className="text-2xl font-bold">{companion.name}</h2>
-                      <p className="text-lg">{companion.topic}</p>
-                  </div>
-                </div>
-            
                 </Link>
               </TableCell>
               <TableCell>
-                <div className="subject-badge">{companion.subject}</div>
+                <div className="subject-badge">{subject}</div>
               </TableCell>
               <TableCell>
-                <p className="text-sm">{companion.duration} mins</p>
+                <p className="text-sm">{duration} mins</p>
               </TableCell>
             </TableRow>
           </TableBody>

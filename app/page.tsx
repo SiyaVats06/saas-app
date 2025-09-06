@@ -2,9 +2,12 @@ import React from "react";
 import CompanionCard from "../components/CompanionCard";
 import CompanionList from "../components/CompanionList";
 import CTA from "../components/CTA";
-import { recentSessions } from "../constants";
+import { getRecentSessions } from "@/lib/actions/companion.actions";
 
-const Page = () => {
+
+
+const Page = async () => {
+    const recentSessions = await getRecentSessions();
   return (
     <main>
       <h2>Dashboard</h2>
@@ -36,11 +39,11 @@ const Page = () => {
       </section>
 
       <section className="home-section">
-        <CompanionList
-          title="Recently completed lessons"
-          companions={recentSessions}
-          classNames="w-2/3 max-lg:w-full"
-        />
+          <CompanionList
+            title="Recently completed lessons"
+            companions={recentSessions}
+            classNames="w-2/3 max-lg:w-full"
+          />
         <CTA />
       </section>
     </main>

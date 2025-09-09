@@ -6,18 +6,19 @@ import { getRecentSessions } from "@/lib/actions/companion.actions";
 
 
 
+
 const Page = async () => {
     const recentSessions = await getRecentSessions();
   return (
     <main>
-      <h2>Dashboard</h2>
-      <section className="home-section">
+     <section className="home-section">
         <CompanionCard
           id="123"
           name="Neura the Brainy Explorer"
           topic="Neural Network of the Brain"
           subject="Science"
           duration={45}
+          bookmarked={false}
           color="#E5D0FF"
         />
         <CompanionCard
@@ -26,6 +27,7 @@ const Page = async () => {
           topic="Derivatives & Integrals"
           subject="Maths"
           duration={30}
+          bookmarked={false}
           color="#FFDA6E"
         />
         <CompanionCard
@@ -34,6 +36,7 @@ const Page = async () => {
           topic="English Literature"
           subject="Language"
           duration={30}
+          bookmarked={false}
           color="#BDE7FF"
         />
       </section>

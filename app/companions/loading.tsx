@@ -4,7 +4,7 @@ export default function Loading() {
   // Define the Loading UI here
   return (
     <div className="flex flex-col gap-4  p-8">
-      <h1>Companion Library</h1>
+      <h2>Companion Library</h2>
       <div className="flex gap-4 w-full">
         <Skeleton className="h-[220px] w-full rounded-xl" />
         <Skeleton className="h-[220px] w-full rounded-xl" />

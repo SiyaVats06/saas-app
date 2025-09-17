@@ -214,3 +214,33 @@ export const getBookmarkedCompanions = async () => {
 
   return data.map(({ companion }) => companion);
 };
+
+//Fn to delete a Companion
+
+export const deleteCompanion = async (companionId: string, path: string) => {
+  const { userId } = await auth();
+  const supabase = createSupabaseClient();
+
+  const { data: SessionData, error: SessionError } = await supabase
+    .from("session_history")
+    .select()
+    .eq("user_id", userId)
+    .eq("companion_id", companionId);
+  if (SessionError) throw new Error(SessionError?.message);
+  console.log(SessionData);
+  
+  if (SessionData.length!=0) {
+    console.log("Cannot delete Companion: Session already exists.");
+    return false
+  } else {
+    const { data: deleteData, error: deleteError } = await supabase
+      .from("companion")
+      .delete()
+      .eq("id", companionId)
+      .eq("author", userId);
+
+    if (deleteError) throw new Error(deleteError?.message);
+    revalidatePath(path);
+    return true;
+  }
+};

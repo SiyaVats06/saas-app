@@ -22,8 +22,8 @@ const CompanionList = async ({title, companions, classNames,}: CompanionListProp
 
 
   return (
-    <article className="border rounded-2xl p-8">
-      <h2 className="text-3xl font-bold">{title}</h2>
+    <article className="border rounded-2xl p-8 w-full">
+      <h3 className="text-3xl font-bold">{title}</h3>
       <Table>
         <TableHeader>
           <TableRow>
@@ -53,8 +53,8 @@ const CompanionList = async ({title, companions, classNames,}: CompanionListProp
                       />
                     </div>
                     <div className="flex flex-col gap-2 ">
-                      <h2 className="text-2xl font-bold">{name}</h2>
-                      <p className="text-lg">{topic}</p>
+                      <h4 className="text-2xl font-bold">{name}</h4>
+                      <h6 className="text-lg">{topic}</h6>
                     </div>
                   </div>
                 </Link>
@@ -63,7 +63,7 @@ const CompanionList = async ({title, companions, classNames,}: CompanionListProp
                 <div className="subject-badge">{subject}</div>
               </TableCell>
               <TableCell>
-                <p className="text-sm">{duration} mins</p>
+                <h6 className="text-sm">{duration} mins</h6>
               </TableCell>
             </TableRow>
           </TableBody>

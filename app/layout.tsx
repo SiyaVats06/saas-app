@@ -3,6 +3,8 @@ import { Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import {  ClerkProvider } from "@clerk/nextjs";
+import { Footer } from "@/components/Footer";
+import { Toaster } from "sonner";
 
 const bricolage = Bricolage_Grotesque({
   variable: "--font-bricolage",
@@ -25,6 +27,8 @@ export default function RootLayout({
         <body className={`${bricolage.variable} antialiased`}>
           <Navbar />
           {children}
+          <Toaster richColors  position="top-center"/>
+          <Footer />
         </body>
       </html>
     </ClerkProvider>

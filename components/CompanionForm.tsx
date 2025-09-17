@@ -3,13 +3,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
-// import { Button } from "@/components/ui/button";
 import { Button } from "./ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -23,11 +20,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
 import { Textarea } from "@/components/ui/textarea";
 import { subjects } from "@/constants";
 import { createCompanion } from "@/lib/actions/companion.actions";
 import { redirect } from "next/navigation";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "Companion is Required" }),
@@ -35,12 +33,13 @@ const formSchema = z.object({
   topic: z.string().min(1, { message: "Topic is Required" }),
   voice: z.string().min(1, { message: "Voice is Required" }),
   style: z.string().min(1, { message: "Style is Required" }),
-  duration: z.number().min(1, { message: "Duration is Required" }),
+  duration: z.coerce.number().min(1, { message: "Duration is Required" }),
 });
 
 const CompanionForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
   // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
@@ -53,19 +52,22 @@ const CompanionForm = () => {
   });
 
   // 2. Define a submit handler.
-  const onSubmit = async(values: z.infer<typeof formSchema>) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-   const companion = await createCompanion(values)
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setIsLoading(true);
+    const companion = await createCompanion(values);
 
-   if(companion){
-      redirect(`/companions/${companion.id}`)
-   }
-   else{
-    console.log("Failed to create a Companion")
-    redirect("/")
-   }
-  }
+    if (companion) {
+      toast.success("Comapnion successfully created");
+      setIsLoading(false);
+      redirect(`/companions/${companion.id}`);
+    } else {
+      toast.error("Failed to create a Companion");
+      setIsLoading(false);
+      redirect("/");
+    }
+  };
+
+  useEffect(() => {}, []);
 
   return (
     <Form {...form}>
@@ -194,10 +196,9 @@ const CompanionForm = () => {
               <FormLabel>Estimated session duration in minutes</FormLabel>
               <FormControl>
                 <Input
-            
                   type="number"
-                  placeholder="15 mins"
-                  {...field}
+                  value={field.value?.toString() || ""}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
                   className="input"
                 />
               </FormControl>
@@ -205,7 +206,13 @@ const CompanionForm = () => {
             </FormItem>
           )}
         />
-        <Button className="w-full cursor-pointer" type="submit">Build Your Comapnion</Button>
+        <Button
+          disabled={isLoading}
+          className="w-full cursor-pointer"
+          type="submit"
+        >
+          Build Your Comapnion
+        </Button>
       </form>
     </Form>
   );

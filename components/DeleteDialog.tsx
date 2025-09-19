@@ -9,7 +9,9 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { deleteCompanion } from "@/lib/actions/companion.actions";
+import { Loader2 } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { toast } from "sonner";
 
 interface DeleteCompanionProps {
@@ -24,8 +26,9 @@ const DeleteDialog = ({
   id,
 }: DeleteCompanionProps) => {
   const pathname = usePathname();
-
+ const [isLoading, setIsLoading] = useState(false);
   const removeCompanion = async () => {
+    setIsLoading(true)
     const isDeleted = await deleteCompanion(id, pathname);
     if (isDeleted) {
       toast.success("Companion is Deleted Successfully");
@@ -33,6 +36,7 @@ const DeleteDialog = ({
       toast.error("Cannot delete Companion: Session already exists.");
     }
     setShowDialog(false);
+     setIsLoading(false)
   };
   return (
     <AlertDialog open={showDialog}>
@@ -48,8 +52,9 @@ const DeleteDialog = ({
           <AlertDialogCancel onClick={() => setShowDialog(false)}>
             Cancel
           </AlertDialogCancel>
-          <AlertDialogAction onClick={removeCompanion} className="bg-red-700">
-            Delete
+          <AlertDialogAction disabled={isLoading} onClick={removeCompanion} className="bg-red-700">
+              {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {isLoading ? "" : "Delete"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

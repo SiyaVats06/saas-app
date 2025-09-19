@@ -1,7 +1,6 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -10,7 +9,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { getSubjectColor } from "../lib/utils";
-import { getRecentSessions } from "@/lib/actions/companion.actions";
+
 
 interface CompanionListProps {
   title?: string;
@@ -33,8 +32,8 @@ const CompanionList = async ({title, companions, classNames,}: CompanionListProp
           </TableRow>
         </TableHeader>
 
-        {companions?.map(({id, subject, name, topic, duration}:Companion) => (
-          <TableBody key={id}>
+        {companions?.map(({id, subject, name, topic, duration}:Companion,index) => (
+          <TableBody key={index}>
             <TableRow>
               <TableCell>
                 <Link href={`/companions/${id}`}>

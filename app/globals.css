@@ -87,6 +87,7 @@
 
 body {
   font-family: var(--font-bricolage);
+  scroll-behavior: smooth;
 }
 
 .dark {

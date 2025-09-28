@@ -5,12 +5,12 @@ import Link from "next/link";
 
 const NoCompanion = ({title}:{title:string}) => {
   return (
-    <div className="min-h-screen bg-background pt-10">
-      <div className="container mx-auto px-6 py-12">
+    <div className="min-h-screen bg-background ">
+      <div className="container mx-auto ">
         <div className="max-w-2xl mx-auto text-center">
           <Card className="border-dashed border-2 border-border/50">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-2xl justify-center ">
+              <CardTitle className="flex flex-col items-center gap-2 text-2xl justify-center ">
                 <Sparkles className="w-6 h-6 text-primary" />
                {title}
               </CardTitle>

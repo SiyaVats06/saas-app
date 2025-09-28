@@ -37,7 +37,7 @@ const features = [
 export const Features = () => {
   return (
     <section className=" bg-gradient-to-br from-background to-secondary/30">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto ">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
             Why Choose Our AI Companions?

@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import React, { useState } from "react";
 import CompanionCard from "./CompanionCard";
@@ -10,12 +10,14 @@ const CompanionCardWrapper = ({ companions, allCompanions }: Companion) => {
   const [showDialog, setShowDialog] = useState(false);
   const [id, setId] = useState("");
 
-  if (companions.length === 0) {
-    return <NoCompanion title=" No Companion Exists for this Subject" />;
-  }
+
   if (allCompanions.length === 0) {
     return <NoCompanion title=" No Companion Created Yet" />;
   }
+  if (companions.length === 0) {
+    return <NoCompanion title="Oops! No Companion Found" />;
+  }
+
 
   return (
     <div>

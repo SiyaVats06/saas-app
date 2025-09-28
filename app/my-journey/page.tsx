@@ -14,8 +14,8 @@ const sessionHistory = await getRecentSessions()
 const bookmarkedCompanions = await getBookmarkedCompanions()
 
   return (
-    <main className="min-lg:w-3/4">
-    <section className="flex justify-between gap-4 max-sm:flex-col items-center">
+    <main className="max-w-[1440px] mx-auto">
+    <section className="flex justify-between gap-4 flex-col lg:flex-row items-center">
         <div className="flex gap-4 items-center">
           <Image
             src={user.imageUrl}

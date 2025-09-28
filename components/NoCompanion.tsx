@@ -3,16 +3,16 @@ import React from "react";
 import { Card, CardContent,CardDescription,CardHeader,CardTitle,} from "@/components/ui/card";
 import Link from "next/link";
 
-const NoCompanion = () => {
+const NoCompanion = ({title}:{title:string}) => {
   return (
-    <div className="min-h-screen bg-background pt-20">
+    <div className="min-h-screen bg-background pt-10">
       <div className="container mx-auto px-6 py-12">
         <div className="max-w-2xl mx-auto text-center">
           <Card className="border-dashed border-2 border-border/50">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-2xl justify-center ">
                 <Sparkles className="w-6 h-6 text-primary" />
-                No Companion Created Yet
+               {title}
               </CardTitle>
               <CardDescription>
                 Get started by creating your first AI companion. Customize their

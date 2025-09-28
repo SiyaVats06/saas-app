@@ -2,7 +2,7 @@ import CompanionCardWrapper from "@/components/CompanionCardWrapper";
 import NoCompanion from "@/components/NoCompanion";
 import SearchInput from "@/components/SearchInput";
 import SubjectFilter from "@/components/SubjectFilter";
-import { getAllCompanions } from "@/lib/actions/companion.actions";
+import { getAllCompanions, getAllUserCompanions } from "@/lib/actions/companion.actions";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -17,9 +17,8 @@ const CompanionsLibrary = async ({ searchParams }: SearchParams) => {
   const topic = filters.topic ? filters.topic : "";
 
   const companions = await getAllCompanions({ subject, topic, userId });
-  if(companions.length===0){
-   return <NoCompanion />
-  }
+  const allCompanions = await getAllUserCompanions(userId);
+
  
   return (
     <main>
@@ -31,7 +30,7 @@ const CompanionsLibrary = async ({ searchParams }: SearchParams) => {
         </div>
       </section>
 
-     <CompanionCardWrapper companions={companions} />
+     <CompanionCardWrapper companions={companions} allCompanions={allCompanions} />
     </main>
   );
 };

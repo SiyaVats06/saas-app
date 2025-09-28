@@ -3,7 +3,7 @@ import React from 'react'
 
 const Subscription = () => {
   return (
-    <div className='flex justify-center items-center p-[20px]'>
+    <div className='flex justify-center items-center p-[20px] max-w-[1440px] mx-auto'>
        <PricingTable />
     </div>
   )
